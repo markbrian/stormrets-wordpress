@@ -3,12 +3,14 @@ Contributors: agentstorm
 Donate link: http://www.stormrets.com/
 Tags: idx, real estate, realestate, rets, agent, broker, property
 Requires at least: 2.9
-Tested up to: 3.1.4
+Tested up to: 3.3
 Stable tag: 1.1.35
 
 This plugin integrates StormRETS IDX Functionality into your Wordpress powered blog.
 
 == Description ==
+
+~Current Version:1.2.11~
 
 NOTE: The default templates where changed between 1.1.x and 1.2.x if you do not wish to use the new templates copy agentstorm_result.php from the plugin directory into your theme directory before updating.
 

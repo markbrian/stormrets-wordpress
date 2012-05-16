@@ -1,11 +1,11 @@
 <?php 
 /*******************************************************************************
-    Plugin Name:  Agent Storm by StormRETS
-    Version:      1.2.10
-    Plugin URI:   http://www.stormrets.com/plugins/wordpress
+    Plugin Name:  StormRETS
+    Version:      1.2.11
+    Plugin URI:   https://www.stormrets.com/plugins/wordpress
     Description:  StormRETS MLS IDX plugin for RETS, FTP and REAXML feeds. See http://www.stormrets.com for more information.
     Author:       StormRETS, Inc.
-    Author URI:   http://www.stormrets.com/
+    Author URI:   https://www.stormrets.com/
     Copyright:    Copyright © 2010 StormRETS, Inc. All Rights Reserved.
 *******************************************************************************/
 
@@ -27,8 +27,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
-define('AS_PLUGIN_DIRECTORY', 'agent-storm');
+define('AS_PLUGIN_DIRECTORY', dirname(plugin_basename(__FILE__)));
 
+if (is_admin()) {
+	include_once('updater.php');
+    $config = array(
+        'slug' => AS_PLUGIN_DIRECTORY,
+        'proper_folder_name' => 'stormrets-wordpress',
+        'api_url' => 'https://api.github.com/repos/stormrets/stormrets-wordpress',
+        'raw_url' => 'https://raw.github.com/stormrets/stormrets-wordpress/master',
+        'github_url' => 'https://github.com/stormrets/stormrets-wordpress',
+        'zip_url' => 'https://github.com/stormrets/stormrets-wordpress/zipball/master',
+        'sslverify' => false,
+        'requires' => '3.0',
+        'tested' => '3.3',
+        'readme' => 'readme.txt'
+    );
+    new WPGitHubUpdater($config);
+}
 
 if( !class_exists( 'WP_Http' ) ) include_once( ABSPATH . WPINC. '/class-http.php' );
 
@@ -50,8 +66,8 @@ class AgentStorm {
     function adminInit() {
         
         wp_register_script('AgentStormJqueryUI', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js', array('jquery'));
-        wp_register_style('AgentStormDefault', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/default.css');
-        wp_register_style('AgentStormJqueryUI', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/custom.css');
+        wp_register_style('AgentStormDefault', plugins_url('/static/css/default.css', __FILE__));
+        wp_register_style('AgentStormJqueryUI', plugins_url('/static/css/custom.css', __FILE__));
         
         wp_enqueue_style('AgentStormDefault');
         wp_enqueue_script("thickbox");
@@ -65,7 +81,7 @@ class AgentStorm {
      */
     function adminRegisterMenu() {
         
-        $page = add_menu_page('Agent Storm', 'Agent Storm', 'administrator', __FILE__, array(&$this, 'displayAdmin'), WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/images/icon.png');
+        $page = add_menu_page('StormRETS', 'StormRETS', 'administrator', __FILE__, array(&$this, 'displayAdmin'), plugins_url('/static/images/icon.png', __FILE__));
         add_action('admin_print_styles-' . $page, array($this, 'adminLoadStyles'));
         
     }
@@ -114,7 +130,7 @@ class AgentStorm {
                     }
                 }
                 if (!$match) {
-                    wp_cache_set('agentstorm_admin_notice', '<strong>StormRETS</strong><br />All In One SEO Pack was detected but does not appear to be correctly configured for use with Agent Storm. Search Engine Optimization may be compromized as a result. For more information see <a href="http://www.stormrets.com/faqs/wordpress/wordpress-seo-plugin-compatibility" target="_blank">http://www.stormrets.com/faqs/wordpress/wordpress-seo-plugin-compatibility</a>');
+                    wp_cache_set('agentstorm_admin_notice', '<strong>StormRETS</strong><br />All In One SEO Pack was detected but does not appear to be correctly configured for use with StormRETS. Search Engine Optimization may be compromized as a result. For more information see <a href="http://www.stormrets.com/faqs/wordpress/wordpress-seo-plugin-compatibility" target="_blank">http://www.stormrets.com/faqs/wordpress/wordpress-seo-plugin-compatibility</a>');
                 	add_action( 'admin_notices', array(&$this, 'displayAdminNotices'));
                 }
             }
@@ -139,15 +155,15 @@ class AgentStorm {
         //
         wp_register_script('GoogleMaps', 'http://maps.google.com/maps/api/js?sensor=false&region=US');
         wp_register_script('AgentStormMaps', 'http://www.stormrets.com/javascripts/maps/loader.js', array('jquery'));
-        wp_register_script('AgentStormUndercover', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/js/jquery.undercover.js', array('jquery'));
+        wp_register_script('AgentStormUndercover', plugins_url('/static/js/jquery.undercover.js', __FILE__), array('jquery'));
         
         // Register the Site Default Styles
         //
-        wp_register_style('AgentStormSite', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/site.css');
-        wp_register_style('AgentStormSiteRed', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/site-red.css');
-        wp_register_style('AgentStormSiteBlue', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/site-blue.css');
-        wp_register_style('AgentStormSiteGrey', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/site-grey.css');
-        wp_register_style('AgentStormSiteBrown', WP_PLUGIN_URL . DIRECTORY_SEPARATOR . AS_PLUGIN_DIRECTORY . '/static/css/site-brown.css');
+        wp_register_style('AgentStormSite', plugins_url('/static/css/site.css', __FILE__));
+        wp_register_style('AgentStormSiteRed', plugins_url('/static/css/site-red.css', __FILE__));
+        wp_register_style('AgentStormSiteBlue', plugins_url('/static/css/site-blue.css', __FILE__));
+        wp_register_style('AgentStormSiteGrey', plugins_url('/static/css/site-grey.css', __FILE__));
+        wp_register_style('AgentStormSiteBrown', plugins_url('/static/css/site-brown.css', __FILE__));
         
         // Add the correct built in stylesheets
         //
@@ -199,7 +215,7 @@ class AgentStorm {
      * Helper function to check if we have a valid API key and hostname
      */
     function isConfigured() {
-    	return (AgentStormSettingCache::get('as_hostname', false) && AgentStormSettingCache::get('as_apikey', false));
+    	return (true && AgentStormSettingCache::get('as_apikey', false));
     }
     
     /**
@@ -227,44 +243,13 @@ class AgentStorm {
             
             // Save the Options
             //
-            if (isset($_POST['as_usestyle'])) {
-                AgentStormSettingCache::set('as_usestyle', $_POST['as_usestyle']);
-            }
-            if (isset($_POST['as_hostname'])) {
-				if (substr($_POST['as_hostname'], -1) !== '/') {
-					AgentStormSettingCache::set('as_hostname', $_POST['as_hostname'].'/');
-				} else {
-					AgentStormSettingCache::set('as_hostname', $_POST['as_hostname']);
-				}
-            }
-            if (isset($_POST['as_pipelining'])) {
-                AgentStormSettingCache::set('as_pipelining', true);
-            } else {
-                AgentStormSettingCache::set('as_pipelining', false);
-            }
-            
-            // Force and Update of the Cities database
-            //
-            $as_tags = $as->getTags();
-            AgentStormSettingCache::set('as_tags', $as_tags->Tags);
-            
+			AgentStormSettingCache::set('as_apikey', $_POST['as_apikey']);
+	        $as = new AgentStormRequest(AgentStormSettingCache::get('as_hostname'), AgentStormSettingCache::get('as_apikey'));
+			
             // Force update of the Property Metadata
             //
             $as_metadata = $as->getPropertyMetaData();
             AgentStormSettingCache::set('as_metadata', $as_metadata->MetaData);
-            
-            // If we have previously selected a tag and it does not exist in the current 
-            // dataset (maybe we switched hostnames) then reset the flag.
-            //
-            if (AgentStormSettingCache::get('as_idx_settings_tag', '') != '') {
-                $tag_exists = false;
-                foreach ($as_tags->Tags as $tag) {
-                    if (AgentStormSettingCache::get('as_idx_settings_tag', '') == $tag->Name) {
-                        $tag_exists = true;
-                    }
-                }
-                if (!$tag_exists) AgentStormSettingCache::set('as_idx_settings_tag', '');
-            }
             
             // Get the cities
             //
@@ -313,6 +298,9 @@ class AgentStorm {
         // Save the IDX Data Settings
         //
         if (isset($_POST['as_idx_save'])) {
+            if (isset($_POST['as_usestyle'])) {
+                AgentStormSettingCache::set('as_usestyle', $_POST['as_usestyle']);
+            }
             if (isset($_POST['as_idx_template_result'])) {
                 AgentStormSettingCache::set('as_idx_template_result', $_POST['as_idx_template_result']);
             }
@@ -2012,8 +2000,8 @@ class AgentStormWidgetContact {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Contact Manager Widget'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Contact Manager Widget'), array($this, 'displayAdmin'));
+        //register_sidebar_widget(_('Agent Storm Contact Manager Widget'), array($this, 'display'));
+        //register_widget_control(_('Agent Storm Contact Manager Widget'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2115,8 +2103,8 @@ class AgentStormWidgetSearchMLSNumber {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Search by MLS Number'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Search by MLS Number'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Search by MLS Number'), array($this, 'display'));
+        register_widget_control(_('StormRETS Search by MLS Number'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2160,8 +2148,8 @@ class AgentStormWidgetLoggedIn {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Logged In User'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Logged In User'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Logged In User'), array($this, 'display'));
+        register_widget_control(_('StormRETS Logged In User'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2214,8 +2202,8 @@ class AgentStormWidgetSearchDetails {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Search Details'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Search Details'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Search Details'), array($this, 'display'));
+        register_widget_control(_('StormRETS Search Details'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2266,8 +2254,8 @@ class AgentStormWidgetPriceFilter {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Price Filter'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Price Filter'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Price Filter'), array($this, 'display'));
+        register_widget_control(_('StormRETS Price Filter'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2313,8 +2301,8 @@ class AgentStormWidgetPropertyTypeFilter {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Property Type Filter'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Property Type Filter'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Property Type Filter'), array($this, 'display'));
+        register_widget_control(_('StormRETS Property Type Filter'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2360,8 +2348,8 @@ class AgentStormWidgetNavigation {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Navigation Widget'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Navigation Widget'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Navigation Widget'), array($this, 'display'));
+        register_widget_control(_('StormRETS Navigation Widget'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2420,8 +2408,8 @@ class AgentStormWidgetSearch {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Search Widget'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Search Widget'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Search Widget'), array($this, 'display'));
+        register_widget_control(_('StormRETS Search Widget'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2468,8 +2456,8 @@ class AgentStormWidgetConfigurableSearch {
      *
      */
     function init() {
-        register_sidebar_widget(_('Agent Storm Configurable Search Widget'), array($this, 'display'));
-        register_widget_control(_('Agent Storm Configurable Search Widget'), array($this, 'displayAdmin'));
+        register_sidebar_widget(_('StormRETS Configurable Search Widget'), array($this, 'display'));
+        register_widget_control(_('StormRETS Configurable Search Widget'), array($this, 'displayAdmin'));
     }
     
     /**
@@ -2980,6 +2968,8 @@ function agentstorm_activate() {
     //
     wp_schedule_event(time(), 'hourly', 'agentstorm_hourly');
     
+	AgentStormSettingCache::set('as_hostname', 'https://www.stormrets.com/');
+	
     // Set some variables
     //
     if (AgentStormSettingCache::get('as_usestyle', '') == '') AgentStormSettingCache::set('as_usestyle', true);
@@ -3088,7 +3078,7 @@ function agentstorm_metadatasort($a, $b) {
 
 
 
-// Initialize the Agent Storm Plugin
+// Initialize the StormRETS Plugin
 //
 $agentstorm = new AgentStorm();
 add_action('admin_init', array(&$agentstorm, 'adminInit'));
@@ -3102,11 +3092,11 @@ add_filter('redirect_canonical', array(&$agentstorm, 'preventFakeStaticRedirect'
 register_activation_hook(__FILE__, 'agentstorm_activate');
 register_deactivation_hook(__FILE__, 'agentstorm_deactivate');
 register_sidebar( array(
-	'name'          => __('Agent Storm Above Listing'),
+	'name'          => __('StormRETS Above Listing'),
 	'description'   => 'Widget area displayed above property listings'
 ));
 register_sidebar( array(
-	'name'          => __('Agent Storm - Below Listing'),
+	'name'          => __('StormRETS - Below Listing'),
 	'description'   => 'Widget area displayed below property listings'
 ));
 

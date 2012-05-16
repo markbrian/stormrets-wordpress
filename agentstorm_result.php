@@ -230,7 +230,7 @@
 		<?php endif; ?>
 		
 		<div class="agentstorm-copyright">
-			<div class="agentstorm-br-logo"><img src="<?php echo bloginfo('url'); ?>/wp-content/plugins/agent-storm/static/images/broker_reciprocity.gif" align="left" style="margin:0!important;" /></div>
+			<div class="agentstorm-br-logo"><img src="<?php echo bloginfo('url'); ?>/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/static/images/broker_reciprocity.gif" align="left" style="margin:0!important;" /></div>
 			<p class="first">
 				Listing Provided by <?php echo (!empty($result->AgentName)) ? ucwords(strtolower($result->AgentName)) : ucwords(strtolower($result->AgentFirstName)) . ' ' . ucwords(strtolower($result->AgentLastName)); ?>, <?php echo ucwords(strtolower($result->AgentCompany)); ?>. 
 				The data relating to real estate for sale on this web site comes in part from the Broker Reciprocity Program. The information
@@ -302,7 +302,7 @@
 					    <?php if ($result->Latitude && AgentStormSettingCache::get('as_idx_gmap')): ?>
 							map = new AgentStormMap('agentstorm-map', '<?php echo AgentStormSettingCache::get('as_map_provider', 'agentstorm'); ?>', false);
 							map.event.addListener(map, 'mapReady', function() {
-								map.setMarkerUrl('/wp-content/plugins/agent-storm/static/images/house_icon.png');
+								map.setMarkerUrl('/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/static/images/house_icon.png');
 								map.setCenter(<?php echo $result->Latitude; ?>, <?php echo $result->Longitude; ?>, 13);
 								map.addMarker(25, 25, map.markerUrl, <?php echo $result->Latitude; ?>, <?php echo $result->Longitude; ?>, '#');
 							});

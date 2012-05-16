@@ -21,11 +21,10 @@
 <div class="wrap static">
     
     <div id="agentstorm">
-        <div id="agentstorm-logoc"><div id="agentstorm-logo-caption"><div id="agentstorm-logo-caption-text"><?php echo AgentStorm::getOneLiner(); ?></div></div><div id="agentstorm-logo"></div></div>
+        <div id="agentstorm-logoc"><div id="agentstorm-logo"></div></div>
         <div id="agentstorm-tabs">
             <ul>
                 <li><a href="#tabs-1"><?php echo _('Settings'); ?></a></li>
-                <li <?php if (!$this->isConfigured()): ?>class="ui-state-disabled"<?php endif; ?>><a href="#tabs-2"><?php echo _('Contact Manager'); ?></a></li>
                 <li <?php if (!$this->isConfigured()): ?>class="ui-state-disabled"<?php endif; ?>><a href="#tabs-3"><?php echo _('Displaying IDX Data'); ?></a></li>
                 <li <?php if (!$this->isConfigured()): ?>class="ui-state-disabled"<?php endif; ?>><a href="#tabs-4"><?php echo _('IDX Data Settings'); ?></a></li>
                 <li <?php if (!$this->isConfigured()): ?>class="ui-state-disabled"<?php endif; ?>><a href="#tabs-5"><?php echo _('Agent Details'); ?></a></li>
@@ -48,103 +47,12 @@
                 </div>
                 <form action="<?php echo $_SERVER["REQUEST_URI"]; ?>#tabs-1" method="POST">
                     <div class="agentstorm-input">
-                        <label><?php echo _('Built in Stylesheet:'); ?></label><br />
-                        <span class="small"><?php echo _('Themes change the colors of the plugin, Choose a theme that fits your site design or select "Custom" to use your own stylesheet.'); ?></span><br />
-                        <select name="as_usestyle">
-                            <option value="1" <?php if (AgentStormSettingCache::get('as_usestyle') == 1): ?>selected="selected"<?php endif; ?>><?php echo _('Green'); ?></option>
-                            <option value="2" <?php if (AgentStormSettingCache::get('as_usestyle') == 2): ?>selected="selected"<?php endif; ?>><?php echo _('Red'); ?></option>
-                            <option value="3" <?php if (AgentStormSettingCache::get('as_usestyle') == 3): ?>selected="selected"<?php endif; ?>><?php echo _('Blue'); ?></option>
-                            <option value="4" <?php if (AgentStormSettingCache::get('as_usestyle') == 4): ?>selected="selected"<?php endif; ?>><?php echo _('Grey'); ?></option>
-                            <option value="5" <?php if (AgentStormSettingCache::get('as_usestyle') == 5): ?>selected="selected"<?php endif; ?>><?php echo _('Brown'); ?></option>
-                            <option value="" <?php if (AgentStormSettingCache::get('as_usestyle') == ''): ?>selected="selected"<?php endif; ?>><?php echo _('Custom'); ?></option>
-                        </select>
-                    </div>
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Hostname'); ?>:</label><br />
-                        <span class="small"><?php echo _('This is the Hostname you connect to when logging in to your StormRETS account. i.e. http://example.stormrets.com/'); ?></span><br />
-                        <input type="text" name="as_hostname" class="text" value="<?php echo AgentStormSettingCache::get('as_hostname', 'http://'); ?>" />
-                    </div>
-                    <div class="agentstorm-input">
                         <label><?php echo _('API Key'); ?>:</label><br />
                         <span class="small"><?php echo _('Your API Key can be found under the Integration section of your StormRETS homepage.'); ?></span><br />
                         <input type="text" name="as_apikey" class="text" value="<?php echo AgentStormSettingCache::get('as_apikey'); ?>" />
                     </div>
                     <div class="agentstorm-input">
-                        <label><?php echo _('Use SYSV Message based Shared Memory Proxy'); ?>:</label><br />
-                        <span class="small"><?php echo _('If supported by your web host, runs a php shared memory process which handles keep alive connections to reduce API latency by up to 60%. If your unsure, leave this option unchecked.'); ?></span><br />
-                        <?php if (function_exists('msg_get_queue')): ?>
-                            <input type="checkbox" name="as_pipelining" value="1" <?php if (AgentStormSettingCache::get('as_pipelining', false)): ?>checked="checked"<?php endif; ?> /> <span class="small"><?php echo _('WARNING: Experimental Feature'); ?></span><br />
-                        <?php else: ?>
-                            <input type="checkbox" name="as_pipelining" value="0" disabled="disabled" /> <span class="small" style="color:#DD0000;"><?php echo _('Not Supported by your Web Host'); ?></span><br />
-                        <?php endif; ?>
-                    </div>
-                    <div class="agentstorm-input">
                         <input name="as_settings_save" class="button-secondary" value="<?php echo _('Save Changes'); ?>" type="submit" />
-                    </div>
-                </form>
-            </div>
-            <div id="tabs-2" class="ui-tabs-hide" style="position:relative;">
-                <div class="agentstom-msgbox ui-state-highlight ui-corners-msgbox" style="margin-top: 10px; padding: 0 .7em;"> 
-                    <p class="text-base <?php if (!empty($_POST) && isset($_POST['as_contact_save'])): ?>ui-helper-hidden<?php endif; ?>">
-                        <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span><strong><?php echo _('Information'); ?></strong><br />
-                        <?php echo _('Keep track of vistors that request more information via property listings and the StormRETS Sidebar Widget.'); ?>
-                    </p>
-                    <?php if (!empty($_POST) && isset($_POST['as_contact_save'])): ?>
-                    <p class="text-temp">
-                        <span class="ui-icon ui-icon-check" style="float: left; margin-right: .3em;"></span><strong><?php echo _('Save Successful'); ?></strong><br />
-                        <?php echo _('Your changes have been saved successfully'); ?>
-                    </p>
-                    <?php endif; ?>
-                </div>
-                <form action="<?php echo $_SERVER["REQUEST_URI"]; ?>#tabs-2" method="POST">
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Hook Login'); ?>:</label><br />
-                        <span class="small"><?php echo _('Hook Login/Registration into my StormRETS contacts.'); ?></span><br />
-                        <ul class="multi-selector">
-                            <li class="client_status"><a href="#" class="grey <?php if (!AgentStormSettingCache::get('as_contact_loginhook', false)): ?>selected<?php endif; ?>" rel="0">Off</a></li>
-                            <li class="client_status"><a href="#" class="green <?php if (AgentStormSettingCache::get('as_contact_loginhook', false)): ?>selected<?php endif; ?>" rel="1">On</a></li>
-                        </ul>
-                        <input type="hidden" name="as_contact_loginhook" <?php if (AgentStormSettingCache::get('as_contact_loginhook') == true): ?>value="1"<?php endif; ?> />
-                    </div>
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Email Notification'); ?>:</label><br />
-                        <span class="small"><?php echo _('Send a notification via email to this Wordpress sites administrator when a new prospect is received via the contact form.'); ?></span><br />
-                        <ul class="multi-selector">
-                            <li class="client_status"><a href="#" class="grey <?php if (!AgentStormSettingCache::get('as_contact_emailnotification', false)): ?>selected<?php endif; ?>" rel="0">Off</a></li>
-                            <li class="client_status"><a href="#" class="green <?php if (AgentStormSettingCache::get('as_contact_emailnotification', false)): ?>selected<?php endif; ?>" rel="1">On</a></li>
-                        </ul>
-                        <input type="hidden" name="as_contact_emailnotification" <?php if (AgentStormSettingCache::get('as_contact_emailnotification') == true): ?>value="1"<?php endif; ?> />
-                    </div>
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Email Notification on Prospect Login'); ?>:</label><br />
-                        <span class="small"><?php echo _('Send a notification via email to this Wordpress sites administrator when a prospect signs in.'); ?></span><br />
-                        <ul class="multi-selector">
-                            <li class="client_status"><a href="#" class="grey <?php if (!AgentStormSettingCache::get('as_contact_emaillogin', false)): ?>selected<?php endif; ?>" rel="0">Off</a></li>
-                            <li class="client_status"><a href="#" class="green <?php if (AgentStormSettingCache::get('as_contact_emaillogin', false)): ?>selected<?php endif; ?>" rel="1">On</a></li>
-                        </ul>
-                        <input type="hidden" name="as_contact_emaillogin" <?php if (AgentStormSettingCache::get('as_contact_emaillogin') == true): ?>value="1"<?php endif; ?> />
-                    </div>
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Email Notification of Prospect Register'); ?>:</label><br />
-                        <span class="small"><?php echo _('Send a notification via email to this Wordpress sites administrator when a prospect registers.'); ?></span><br />
-                        <ul class="multi-selector">
-                            <li class="client_status"><a href="#" class="grey <?php if (!AgentStormSettingCache::get('as_contact_emailregister', false)): ?>selected<?php endif; ?>" rel="0">Off</a></li>
-                            <li class="client_status"><a href="#" class="green <?php if (AgentStormSettingCache::get('as_contact_emailregister', false)): ?>selected<?php endif; ?>" rel="1">On</a></li>
-                        </ul>
-                        <input type="hidden" name="as_contact_emailregister" <?php if (AgentStormSettingCache::get('as_contact_emailregister') == true): ?>value="1"<?php endif; ?> />
-                    </div>
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Contact Source'); ?>:</label><br />
-                        <span class="small"><?php echo _('Set the Source that will be logged with new prospects allowing you to track where your leads are coming from.'); ?></span><br />
-                        <input type="text" name="as_contact_source" class="text" value="<?php echo AgentStormSettingCache::get('as_contact_source'); ?>" />
-                    </div>
-                    <div class="agentstorm-input">
-                        <label><?php echo _('Login Box Header'); ?>:</label><br />
-                        <span class="small"><?php echo _('Text or HTML to be displayed above as a header in the Login Lightbox'); ?></span><br />
-                        <textarea name="as_contact_lightbox_header" style="width:550px;"><?php echo AgentStormSettingCache::get('as_contact_lightbox_header'); ?></textarea>
-                    </div>
-                    <div class="agentstorm-input">
-                        <input name="as_contact_save" class="button-secondary" value="<?php echo _('Save Changes'); ?>" type="submit" />
                     </div>
                 </form>
             </div>
@@ -168,6 +76,18 @@
                     <?php endif; ?>
                 </div>
                 <form action="<?php echo $_SERVER["REQUEST_URI"]; ?>#tabs-3" method="POST">
+                    <div class="agentstorm-input">
+                        <label><?php echo _('Built in Stylesheet:'); ?></label><br />
+                        <span class="small"><?php echo _('Themes change the colors of the plugin, Choose a theme that fits your site design or select "Custom" to use your own stylesheet.'); ?></span><br />
+                        <select name="as_usestyle">
+                            <option value="1" <?php if (AgentStormSettingCache::get('as_usestyle') == 1): ?>selected="selected"<?php endif; ?>><?php echo _('Green'); ?></option>
+                            <option value="2" <?php if (AgentStormSettingCache::get('as_usestyle') == 2): ?>selected="selected"<?php endif; ?>><?php echo _('Red'); ?></option>
+                            <option value="3" <?php if (AgentStormSettingCache::get('as_usestyle') == 3): ?>selected="selected"<?php endif; ?>><?php echo _('Blue'); ?></option>
+                            <option value="4" <?php if (AgentStormSettingCache::get('as_usestyle') == 4): ?>selected="selected"<?php endif; ?>><?php echo _('Grey'); ?></option>
+                            <option value="5" <?php if (AgentStormSettingCache::get('as_usestyle') == 5): ?>selected="selected"<?php endif; ?>><?php echo _('Brown'); ?></option>
+                            <option value="" <?php if (AgentStormSettingCache::get('as_usestyle') == ''): ?>selected="selected"<?php endif; ?>><?php echo _('Custom'); ?></option>
+                        </select>
+                    </div>
                     <div class="agentstorm-input">
                         <label><?php echo _('Custom Templates'); ?>:</label><br />
                         <span class="small"><?php echo _('If you want to fully customize the results and listings pages choose the correct template from your Template Directory.'); ?> <?php echo _('If you want to use the default templates included with Agent Storm set these options to page.php.'); ?> <?php echo _('For detailed information on creating custom pages see the Custom Templates article on the Agent Storm support site.'); ?></span><br />

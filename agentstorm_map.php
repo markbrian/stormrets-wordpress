@@ -29,8 +29,8 @@
         
         map = new AgentStormMap('agentstorm_map', '<?php echo AgentStormSettingCache::get('as_map_provider', 'agentstorm'); ?>', false);
         map.event.addListener(map, 'mapReady', function() {
-            map.setMarkerProxyUrl('<?php bloginfo('wpurl') ?>/wp-content/plugins/agent-storm/agentstorm_result_proxy.php');
-            map.setMarkerUrl('<?php (isset($icon) && !empty($icon)) ? $icon : bloginfo('wpurl').'/wp-content/plugins/agent-storm/static/images/house_icon.png'; ?>');
+            map.setMarkerProxyUrl('<?php bloginfo('wpurl') ?>/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/agentstorm_result_proxy.php');
+            map.setMarkerUrl('<?php (isset($icon) && !empty($icon)) ? $icon : bloginfo('wpurl').'/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/static/images/house_icon.png'; ?>');
                 map.setCenter(<?php echo (isset($lat) && !empty($lat)) ? $lat : AgentStormSettingCache::get('as_map_lat', '38'); ?>, <?php echo (isset($lng) && !empty($lng)) ? $lng : AgentStormSettingCache::get('as_map_lng', '-97'); ?>, <?php echo (isset($zoom) && !empty($zoom)) ? $zoom : AgentStormSettingCache::get('as_map_zoom', '4'); ?>);
             map.event.addListener(map, 'zoomEnd', map.updateMarkers, map);
             map.event.addListener(map, 'moveEnd', map.updateMarkers, map);

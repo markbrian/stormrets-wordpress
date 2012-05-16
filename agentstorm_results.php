@@ -65,7 +65,7 @@
 				<?php if (!empty($result->Photos)): ?>
 					<a href="<?php echo $this->getPropertyPermalink($result); ?>"><img src="<?php echo $result->Photos[0]->Url; ?>" width="150" /></a>
 				<?php else: ?>
-					<img src="/wp-content/plugins/agent-storm/static/images/nopic.jpg" width="150" height="112" alt="No Photo Available" />
+					<img src="/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/static/images/nopic.jpg" width="150" height="112" alt="No Photo Available" />
 				<?php endif; ?>
             </div>
             <div class="agentstorm-result-price">$<?php echo number_format($result->ListPrice); ?></div>
@@ -129,7 +129,7 @@
 		
 		map = new AgentStormMap('agentstorm-resultmap', '<?php echo AgentStormSettingCache::get('as_map_provider', 'agentstorm'); ?>', false);
 		map.event.addListener(map, 'mapReady', function() {
-			map.setMarkerUrl('/wp-content/plugins/agent-storm/static/images/house_icon.png');
+			map.setMarkerUrl('/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/static/images/house_icon.png');
 			//map.setCenter(<?php echo $result->Latitude; ?>, <?php echo $result->Longitude; ?>, 16);
 			<?php foreach ($results as $result): ?>
 				<?php if (!empty($result->Latitude) && !empty($result->Longitude) && ($result->Latitude != '0.0000000') && ($result->Longitude != '0.0000000')): ?>

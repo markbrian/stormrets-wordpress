@@ -1,7 +1,7 @@
 
 #agentstorm       { padding: 2em 0 1em 0; }
 #agentstorm-logoc { height:75px; position:relative; }
-#agentstorm-logo  { background: url(../images/logo.png) top left no-repeat; width:174px; height:45px; position:absolute; left:0; bottom:10px;}
+#agentstorm-logo  { background: url(https://stormrets-stormrets.netdna-ssl.com/images/logo_color.png) top left no-repeat; width:250px; height:45px; position:absolute; left:0; bottom:10px;}
 #agentstorm-logo-caption { background: transparent url(../images/logocaption.gif); width:358px; height:75px; float:right; }
 #agentstorm-logo-caption-text { font-size:10px !important; padding: 18px 0 0 35px; text-shadow: 1px 0 1px #FFF; }
 
@@ -11,8 +11,6 @@
 .agentstorm-input TEXTAREA.text { width: 400px; }
 
 .small { font-size: 80%; }
-
-.ui-tabs-panel { background: #FFFFFF url(../images/twister.png) +93% bottom no-repeat !important; }
 
 ul.multi-selector {
     display:inline-block;
@@ -119,7 +117,7 @@ ul.multi-selector li .blue:hover, ul.multi-selector li .blue.selected {
 }
 ul.multi-selector li .green:hover, ul.multi-selector li .green.selected {
     color:#FFF!important;
-    background-color:#7FAD39;
+    background-color:#419200;
     text-decoration:none;
     background-repeat:no-repeat;
 }
