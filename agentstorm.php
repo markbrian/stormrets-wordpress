@@ -3,7 +3,7 @@
     Plugin Name:  StormRETS
     Version:      1.2.11
     Plugin URI:   https://www.stormrets.com/plugins/wordpress
-    Description:  StormRETS MLS IDX plugin for RETS, FTP and REAXML feeds. See http://www.stormrets.com for more information.
+    Description:  StormRETS MLS IDX plugin for RETS Feeds. See http://www.stormrets.com for more information.
     Author:       StormRETS, Inc.
     Author URI:   https://www.stormrets.com/
     Copyright:    Copyright © 2010 StormRETS, Inc. All Rights Reserved.
