@@ -46,9 +46,9 @@
 					<?php else: ?>
 						<?php if (($key-1) !== 0 && !(($key-1) % 4)): ?><div class="clear"></div><?php endif; ?>
 						<?php if ($key <= 8): ?>
-							<a href="#" class="imageHover"><img src="<?php echo $photo->Url; ?>" width="70" data-url="<?php echo $photo->Url; ?>" /></a>
+							<a href="#" class="imageHover"><img src="<?php echo $photo->ThumbnailUrl; ?>" width="70" data-thumbnailurl="<?php echo $photo->ThumbnailUrl; ?>" data-url="<?php echo $photo->Url; ?>" /></a>
 						<?php else: ?>
-							<a href="#" class="imageHover" style="display:none;"><img src="" width="70" data-url="<?php echo $photo->Url; ?>" /></a>
+							<a href="#" class="imageHover" style="display:none;"><img src="" width="70" data-thumbnailurl="<?php echo $photo->ThumbnailUrl; ?>" data-url="<?php echo $photo->Url; ?>" /></a>
 						<?php endif; ?>
 					<?php endif; ?>
 					<?php $curphoto++; ?>
@@ -275,8 +275,8 @@
 			jQuery('.imageHover').click(function(e) {
 				e.preventDefault();
 				$this = jQuery(this);
-				jQuery('#primaryImage').attr('href', jQuery('IMG', $this).attr('src'));
-				jQuery('#primaryImage IMG').attr('src', jQuery('IMG', $this).attr('src'));
+				jQuery('#primaryImage').attr('href', jQuery('IMG', $this).attr('data-url'));
+				jQuery('#primaryImage IMG').attr('src', jQuery('IMG', $this).attr('data-url'));
 			});
 		});
 		
@@ -285,7 +285,7 @@
 			jQuery('.imageHover').show();
 			jQuery('.imageHover IMG').each(function(i, v) {
 				$v = jQuery(v);
-				$v.attr('src', $v.attr('data-url'));
+				$v.attr('src', $v.attr('data-thumbnailurl'));
 			});
 			jQuery(this).hide();
 		});

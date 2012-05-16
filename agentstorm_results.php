@@ -63,7 +63,7 @@
         <div class="agentstorm-result" <?php if ($key % 2): ?>style="background:#EFEFEF !important;"<?php endif; ?>>
             <div class="agentstorm-result-image">
 				<?php if (!empty($result->Photos)): ?>
-					<a href="<?php echo $this->getPropertyPermalink($result); ?>"><img src="<?php echo $result->Photos[0]->Url; ?>" width="150" /></a>
+					<a href="<?php echo $this->getPropertyPermalink($result); ?>"><img src="<?php echo $result->Photos[0]->ThumbnailUrl; ?>" width="150" /></a>
 				<?php else: ?>
 					<img src="/wp-content/plugins/<?php echo AS_PLUGIN_DIRECTORY; ?>/static/images/nopic.jpg" width="150" height="112" alt="No Photo Available" />
 				<?php endif; ?>
