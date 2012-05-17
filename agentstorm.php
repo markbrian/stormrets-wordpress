@@ -2513,7 +2513,7 @@ class AgentStormActions {
     function init($links, $file) {
         $this_plugin = plugin_basename(__FILE__);
         if ( $file == $this_plugin ){
-            array_unshift($links, '<a href="http://getsatisfaction.com/stormrets">' . __('Support') . '</a>');
+            array_unshift($links, '<a href="http://support.stormrets.com/">' . __('Support') . '</a>');
             array_unshift($links, '<a href="admin.php?page=' . $this_plugin . '">' . __('Settings') . '</a>');
         }
         return $links;
