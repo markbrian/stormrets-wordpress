@@ -10,7 +10,7 @@ This plugin integrates StormRETS IDX Functionality into your Wordpress powered b
 
 == Description ==
 
-~Current Version:1.2.11~
+~Current Version:1.2.12~
 
 NOTE: The default templates where changed between 1.1.x and 1.2.x if you do not wish to use the new templates copy agentstorm_result.php from the plugin directory into your theme directory before updating.
 
