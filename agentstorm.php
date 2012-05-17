@@ -253,7 +253,7 @@ class AgentStorm {
             
             // Get the cities
             //
-            AgentStormSettingCache::set('as_cities', $as->getCities());
+            update_option('as_cities', $as->getCities());
             
             // Schedule the Cities and Tags caches to be refreshed hourly
             //
@@ -457,7 +457,7 @@ class AgentStorm {
             if (isset($_POST['as_idx_settings_tag'])) {
 	            if (AgentStormSettingCache::get('as_idx_settings_tag') !== $_POST['as_idx_settings_tag']) {
 	            	AgentStormSettingCache::set('as_idx_settings_tag', $_POST['as_idx_settings_tag']);
-		            AgentStormSettingCache::set('as_cities', $as->getCities());
+		            update_option('as_cities', $as->getCities());
 	            }
             }
         }
@@ -2358,7 +2358,7 @@ class AgentStormWidgetNavigation {
     function display($args) {
         
         $as = new AgentStormRequest(AgentStormSettingCache::get('as_hostname'), AgentStormSettingCache::get('as_apikey'));
-        $cities = AgentStormSettingCache::get('as_cities');
+        $cities = get_option('as_cities');
         
         extract($args);
         echo $before_widget;
@@ -2418,7 +2418,7 @@ class AgentStormWidgetSearch {
     function display($args) {
         
         $as = new AgentStormRequest(AgentStormSettingCache::get('as_hostname'), AgentStormSettingCache::get('as_apikey'));
-        $cities = AgentStormSettingCache::get('as_cities');
+        $cities = get_option('as_cities');
         
         extract($args);
         echo $before_widget;
@@ -2466,7 +2466,7 @@ class AgentStormWidgetConfigurableSearch {
     function display($args) {
         
         $as = new AgentStormRequest(AgentStormSettingCache::get('as_hostname'), AgentStormSettingCache::get('as_apikey'));
-        $cities = AgentStormSettingCache::get('as_cities');
+        $cities = get_option('as_cities');
         
         extract($args);
         echo $before_widget;
@@ -3054,7 +3054,7 @@ function agentstorm_hourly() {
         $as = new AgentStormRequest(AgentStormSettingCache::get('as_hostname'), AgentStormSettingCache::get('as_apikey'));
         
         $as_cities = $as->getCities();
-        AgentStormSettingCache::set('as_cities', $as->getCities());
+        update_option('as_cities', $as->getCities());
         
         $as_tags = $as->getTags();
         AgentStormSettingCache::set('as_tags', $as_tags->Tags);
