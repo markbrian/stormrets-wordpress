@@ -1422,7 +1422,7 @@ class AgentStormIDX extends stdClass {
 				
 				// Sub Division
 				//
-				if (isset($_GET['as_subdivision'])) {
+				if (isset($_GET['as_subdivision']) && !empty($_GET['as_subdivision'])) {
 					$query['SubDivision'] = urldecode($_GET['as_subdivision']);
 				}
 				
